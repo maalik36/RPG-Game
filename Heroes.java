@@ -9,6 +9,8 @@ public class Heroes {
     Integer Speed;
     Integer MP;
     String Specials;
+    String items[];
+    String spells[];
 
     public Integer getAttack() {
         return Attack;
@@ -44,6 +46,10 @@ public class Heroes {
 
     public Integer getMP() {
         return MP;
+    }
+
+    public String[] getItems() {
+        return items;
     }
 
     public void setAttack(Integer attack) {
@@ -90,8 +96,39 @@ public class Heroes {
         Speed = speed;
     }
 
-    public void Attacking(){
+    public void setItems(String[] items) {
+        this.items = items;
+    }
+
+    public Integer attacking(item move){
+        Integer damage = move.getOffense() * this.Attack;
+        return damage;
+    }
+
+    public void parry()
+    {
 
     }
+    public void defend(){
+        this.setDefense(this.getDefense() + 100);
+        this.setMagicDefense(this.getMagicDefense() + 100);
+    }
+    public void item(){
+        for (Integer i = 0; i < items.length; i++) {
+            System.out.println(items[i]);
+        }
+    }
+    public void spells(){
+        for (Integer i = 0; i < spells.length; i++) {
+            System.out.println(spells[i]);
+        }
+    }
+    public void damage(item move, Heroes other){
+        Integer amount = attacking(move);
+        Integer value = getDefense() - amount;
+        other.setHP(other.getHP() - value);
+    }
+
 };
+
 
