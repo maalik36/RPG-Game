@@ -1,7 +1,9 @@
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Heroes {
     String name;
+    String type;
     Integer HP;
     Integer Attack;
     Integer Defense;
@@ -12,8 +14,8 @@ public class Heroes {
     Integer Speed;
     Integer MP;
     String Specials;
-    String items[];
-    String spells[];
+    Vector<item> items;
+    Vector<item> spells;
 
     public Integer getAttack() {
         return Attack;
@@ -51,7 +53,7 @@ public class Heroes {
         return MP;
     }
 
-    public String[] getItems() {
+    public Vector<item> getItems() {
         return items;
     }
 
@@ -59,7 +61,11 @@ public class Heroes {
         return name;
     }
 
-    public String[] getSpells() {
+    public String getType() {
+        return type;
+    }
+
+    public Vector<item> getSpells() {
         return spells;
     }
 
@@ -87,11 +93,15 @@ public class Heroes {
         this.HP = HP;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void setMagic(Integer magic) {
         Magic = magic;
     }
 
-    public void setSpells(String[] spells) {
+    public void setSpells(Vector<item> spells) {
         this.spells = spells;
     }
 
@@ -111,7 +121,7 @@ public class Heroes {
         Speed = speed;
     }
 
-    public void setItems(String[] items) {
+    public void setItems(Vector<item> items) {
         this.items = items;
     }
 
@@ -133,13 +143,14 @@ public class Heroes {
         this.setMagicDefense(this.getMagicDefense() + 100);
     }
     public void item(){
-        for (Integer i = 0; i < items.length; i++) {
-            System.out.println(items[i]);
+        for (Integer i = 0; i < items.size(); i++) {
+            System.out.println(items.elementAt(i));
+
         }
     }
     public void spells(){
-        for (Integer i = 0; i < spells.length; i++) {
-            System.out.println(spells[i]);
+        for (Integer i = 0; i < spells.size(); i++) {
+            System.out.println(spells.elementAt(i));
         }
     }
     public void damage(item move, Heroes other){
@@ -155,6 +166,7 @@ class Hero extends Heroes{
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();
+        this.type = "good";
         this.Attack = 10;
         this.HP = 100;
         this.MP = 100;
@@ -165,6 +177,18 @@ class Hero extends Heroes{
         this.Speed = 10;
         this.Magic = 10;
         this.Specials = "Slash of Justice";
+        item sword = new sword();
+        this.items.add(sword);
+        item shield = new shield();
+        this.items.add(shield);
+        spells lightning = new lightning();
+        this.spells.add(lightning);
+        spells heal = new heal();
+        this.spells.add(heal);
+        spells stronk = new stronk();
+        this.spells.add(stronk);
+
+
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -182,6 +206,7 @@ class Healer extends Heroes{
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();
+        this.type = "good";
         this.Attack = 5;
         this.HP = 130;
         this.MP = 170;
@@ -192,6 +217,18 @@ class Healer extends Heroes{
         this.Speed = 10;
         this.Magic = 40;
         this.Specials = "Angelic Presence";
+        item scepter = new scepter();
+        this.items.add(scepter);
+        spells air = new air();
+        this.spells.add(air);
+        spells vines = new vines();
+        this.spells.add(vines);
+        spells heal = new heal();
+        this.spells.add(heal);
+        spells midHeal = new midHeal();
+        this.spells.add(midHeal);
+        spells bigHeal = new bigHeal();
+        this.spells.add(bigHeal);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -209,6 +246,7 @@ class Mage extends Heroes{
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();
+        this.type = "good";
         this.Attack = 5;
         this.HP = 70;
         this.MP = 250;
@@ -219,6 +257,22 @@ class Mage extends Heroes{
         this.Speed = 10;
         this.Magic = 100;
         this.Specials = "Basically a nuke";
+        item staff = new staff();
+        this.items.add(staff);
+        spells fire = new fire();
+        spells water = new water();
+        spells earth = new earth();
+        spells air = new air();
+        spells lightning = new lightning();
+        spells vine = new vines();
+        spells magBuff = new magBuff();
+        this.spells.add(fire);
+        this.spells.add(water);
+        this.spells.add(earth);
+        this.spells.add(air);
+        this.spells.add(lightning);
+        this.spells.add(vine);
+        this.spells.add(magBuff);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -236,6 +290,7 @@ class Chameleon extends Heroes{
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();
+        this.type = "good";
         this.Attack = 7;
         this.HP = 50;
         this.MP = 100;
@@ -246,6 +301,10 @@ class Chameleon extends Heroes{
         this.Speed = 100;
         this.Magic = 10;
         this.Specials = "Group Camo";
+        item tongue = new tongue();
+        this.items.add(tongue);
+        spells earth = new earth();
+        this.spells.add(earth);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -260,6 +319,7 @@ class Sweeper extends Heroes{
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();
+        this.type = "good";
         this.Attack = 150;
         this.HP = 100;
         this.MP = 100;
@@ -270,6 +330,12 @@ class Sweeper extends Heroes{
         this.Speed = 120;
         this.Magic = 10;
         this.Specials = "The Sweep";
+        item dagger = new dagger();
+        this.items.add(dagger);
+        spells water = new water();
+        spells speedBuff = new speedBuff();
+        this.spells.add(water);
+        this.spells.add(speedBuff);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -284,6 +350,7 @@ class Shield extends Heroes{
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();
+        this.type = "good";
         this.Attack = 3;
         this.HP = 200;
         this.MP = 100;
@@ -294,6 +361,10 @@ class Shield extends Heroes{
         this.Speed = 1;
         this.Magic = 10;
         this.Specials = "Take Agro";
+        item bigShield = new bigShield();
+        this.items.add(bigShield);
+        spells buffDefenses = new buffDefenses();
+        this.spells.add(buffDefenses);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -307,6 +378,7 @@ class Shrub extends Heroes{
     public void Shrub(){
         this.name = "Awakened Shrub";
         this.Attack = 1;
+        this.type = "bad";
         this.HP = 50;
         this.MP = 100;
         this.Defense = 50;
@@ -316,6 +388,10 @@ class Shrub extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item branch = new branch();
+        this.items.add(branch);
+        spells vine = new vines();
+        this.spells.add(vine);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -329,6 +405,7 @@ class Nothic extends Heroes{
     public void Nothic(){
         this.name = "Nothic";
         this.Attack = 1;
+        this.type = "bad";
         this.HP = 50;
         this.MP = 100;
         this.Defense = 50;
@@ -338,6 +415,22 @@ class Nothic extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item evilStaff = new evilStaff();
+        this.items.add(evilStaff);
+        spells fire = new fire();
+        spells water = new water();
+        spells earth = new earth();
+        spells air = new air();
+        spells lightning = new lightning();
+        spells vine = new vines();
+        spells magBuff = new magBuff();
+        this.spells.add(fire);
+        this.spells.add(water);
+        this.spells.add(earth);
+        this.spells.add(air);
+        this.spells.add(lightning);
+        this.spells.add(vine);
+        this.spells.add(magBuff);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -350,6 +443,7 @@ class Nothic extends Heroes{
 class Rats extends Heroes{
     public void Rats(){
         this.name = "Rats";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -360,6 +454,9 @@ class Rats extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item mouth = new mouth();
+        this.items.add(mouth);
+
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -372,6 +469,7 @@ class Rats extends Heroes{
 class Hawk extends Heroes{
     public void Hawk(){
         this.name = "Hawk";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -382,6 +480,11 @@ class Hawk extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item talons = new talons();
+        this.items.add(talons);
+        spells air = new air();
+        this. spells.add(air);
+
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -394,6 +497,7 @@ class Hawk extends Heroes{
 class Eagle extends Heroes{
     public void Eagle(){
         this.name = "Eagle";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -404,6 +508,10 @@ class Eagle extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item talons = new talons();
+        this.items.add(talons);
+        spells air = new air();
+        this. spells.add(air);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -416,6 +524,7 @@ class Eagle extends Heroes{
 class Panther extends Heroes{
     public void Panther(){
         this.name = "Panther";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -426,6 +535,9 @@ class Panther extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item claws = new talons();
+        this.items.add(claws);
+
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -436,8 +548,10 @@ class Panther extends Heroes{
     }
 }
 class AnimatedArmor extends Heroes{
+
     public void AnimatedArmor(){
         this.name = "Animated Armor";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -448,6 +562,11 @@ class AnimatedArmor extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item bigShield = new bigShield();
+        this.items.add(bigShield);
+        spells buffDefenses = new buffDefenses();
+        this.spells.add(buffDefenses);
+
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -460,6 +579,7 @@ class AnimatedArmor extends Heroes{
 class Goat extends Heroes{
     public void Goat(){
         this.name = "Goat";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -470,6 +590,8 @@ class Goat extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item horns = new horns();
+        this.items.add(horns);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -482,6 +604,7 @@ class Goat extends Heroes{
 class GiantShark extends Heroes{
     public void GiantShark(){
         this.name = "Giant Shark";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -492,6 +615,10 @@ class GiantShark extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item teeth = new mouth();
+        this.items.add(teeth);
+        spells water = new water();
+        this.spells.add(water);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
@@ -504,6 +631,7 @@ class GiantShark extends Heroes{
 class BlinkDog extends Heroes{
     public void BlinkDog(){
         this.name = "Blink Dog";
+        this.type = "bad";
         this.Attack = 1;
         this.HP = 50;
         this.MP = 100;
@@ -514,6 +642,10 @@ class BlinkDog extends Heroes{
         this.Speed = 1;
         this.Magic = 15;
         this.Specials = "Awakened State";
+        item gun = new gun();
+        this.items.add(gun);
+        spells lightning = new lightning();
+        this.spells.add(lightning);
     }
     public void slashOfJustice(item move, Heroes other){
         Integer damage = attacking(move) * 3;
