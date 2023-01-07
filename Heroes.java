@@ -16,6 +16,7 @@ public class Heroes {
     String Specials;
     Vector<item> items;
     Vector<item> spells;
+    Boolean agro = false;
 
     public Integer getAttack() {
         return Attack;
@@ -129,6 +130,10 @@ public class Heroes {
         this.name = name;
     }
 
+    public void Special(){
+
+    }
+
     public Integer attacking(item move){
         Integer damage = move.getOffense() * this.Attack;
         return damage;
@@ -190,7 +195,7 @@ class Hero extends Heroes{
 
 
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -230,11 +235,12 @@ class Healer extends Heroes{
         spells bigHeal = new bigHeal();
         this.spells.add(bigHeal);
     }
-    public void slashOfJustice(item move, Heroes other){
-        Integer damage = attacking(move) * 3;
-        System.out.println("Hero used Slash of Justice!");
-        Integer value = other.getDefense() - damage;
-        other.setHP(other.getHP() + value);
+    public void Special(Vector<Heroes> good){
+        for (Integer i = 0; i < good.size(); i++)
+        {
+            good.elementAt(i).HP = good.elementAt(i).HP + (this.HealingMagic / 2);
+        }
+        this.MP = this.MP / 2;
 
     }
 }
@@ -274,12 +280,12 @@ class Mage extends Heroes{
         this.spells.add(vine);
         this.spells.add(magBuff);
     }
-    public void slashOfJustice(item move, Heroes other){
-        Integer damage = attacking(move) * 3;
-        System.out.println("Hero used Slash of Justice!");
-        Integer value = other.getDefense() - damage;
-        other.setHP(other.getHP() + value);
-
+    public void Special(Vector<Heroes> bad){
+        for (Integer i = 0; i < bad.size(); i++)
+        {
+            bad.elementAt(i).HP = bad.elementAt(i).HP - this.Magic;
+        }
+        this.MP = 0;
     }
 }
 /*
@@ -306,11 +312,11 @@ class Chameleon extends Heroes{
         spells earth = new earth();
         this.spells.add(earth);
     }
-    public void slashOfJustice(item move, Heroes other){
-        Integer damage = attacking(move) * 3;
-        System.out.println("Hero used Slash of Justice!");
-        Integer value = other.getDefense() - damage;
-        other.setHP(other.getHP() + value);
+    public void Special(Vector<Heroes> good){
+        for (Integer i = 0; i < good.size(); i++)
+        {
+            good.elementAt(i).Evasion = good.elementAt(i).Evasion + (good.elementAt(i).Evasion / 2);
+        }
 
     }
 }
@@ -337,7 +343,7 @@ class Sweeper extends Heroes{
         this.spells.add(water);
         this.spells.add(speedBuff);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -366,11 +372,8 @@ class Shield extends Heroes{
         spells buffDefenses = new buffDefenses();
         this.spells.add(buffDefenses);
     }
-    public void slashOfJustice(item move, Heroes other){
-        Integer damage = attacking(move) * 3;
-        System.out.println("Hero used Slash of Justice!");
-        Integer value = other.getDefense() - damage;
-        other.setHP(other.getHP() + value);
+    public void Special(){
+        this.agro = true;
 
     }
 }
@@ -393,7 +396,7 @@ class Shrub extends Heroes{
         spells vine = new vines();
         this.spells.add(vine);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -432,7 +435,7 @@ class Nothic extends Heroes{
         this.spells.add(vine);
         this.spells.add(magBuff);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -458,7 +461,7 @@ class Rats extends Heroes{
         this.items.add(mouth);
 
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -486,7 +489,7 @@ class Hawk extends Heroes{
         this. spells.add(air);
 
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -513,7 +516,7 @@ class Eagle extends Heroes{
         spells air = new air();
         this. spells.add(air);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -539,7 +542,7 @@ class Panther extends Heroes{
         this.items.add(claws);
 
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -568,7 +571,7 @@ class AnimatedArmor extends Heroes{
         this.spells.add(buffDefenses);
 
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -593,7 +596,7 @@ class Goat extends Heroes{
         item horns = new horns();
         this.items.add(horns);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -620,7 +623,7 @@ class GiantShark extends Heroes{
         spells water = new water();
         this.spells.add(water);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
@@ -647,7 +650,35 @@ class BlinkDog extends Heroes{
         spells lightning = new lightning();
         this.spells.add(lightning);
     }
-    public void slashOfJustice(item move, Heroes other){
+    public void Special(item move, Heroes other){
+        Integer damage = attacking(move) * 3;
+        System.out.println("Hero used Slash of Justice!");
+        Integer value = other.getDefense() - damage;
+        other.setHP(other.getHP() + value);
+
+    }
+}
+class Kufra extends Heroes{
+    public void Kufra()
+    {
+        this.name = "Kufra the soul god";
+        this.type = "bad";
+        this.Attack = 1;
+        this.HP = 500;
+        this.MP = 100;
+        this.Defense = 100;
+        this.Evasion = 10;
+        this.HealingMagic = 0;
+        this.MagicDefense = 100;
+        this.Speed = 15;
+        this.Magic = 100;
+        this.Specials = "Awakened State";
+        item gun = new gun();
+        this.items.add(gun);
+        spells lightning = new lightning();
+        this.spells.add(lightning);
+    }
+    public void Special(item move, Heroes other){
         Integer damage = attacking(move) * 3;
         System.out.println("Hero used Slash of Justice!");
         Integer value = other.getDefense() - damage;
