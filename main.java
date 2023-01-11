@@ -62,8 +62,8 @@ public void Game(){
         heroes.add(shield);
     }
     System.out.println("Oh look! A hawk and an eagle appeared!");
-    enemies.add(eagle);
-    enemies.add(hawk);
+    heroes.add(eagle);
+    heroes.add(hawk);
     result = Combat(heroes);
     if (result = false)
     {
@@ -186,41 +186,56 @@ public Vector<Heroes> mergesort(Vector<Heroes> list, Vector<Heroes> tmp, Integer
         Integer center = (left + right) / 2;
         mergesort(list, tmp, left, center);
         mergesort(list, tmp, center + 1, right);
+        turnOrder(list, tmp, left, center + 1, right);
 
     }
     return list;
 }
 
 
-public Vector<Heroes> turnOrder(Vector<Heroes> party, Vector<Heroes> enemies, Vector<Heroes> tmp, Integer leftPos, Integer rightPos, Integer rightEnd){
-    Vector<Heroes> turnOrder = new Vector<>(20);
-    for (Integer i = 0; i < party.size(); i++)
+public Vector<Heroes> turnOrder(Vector<Heroes> heroes, Vector<Heroes> tmp, Integer leftPos, Integer rightPos, Integer rightEnd){
+    Integer leftEnd = rightPos - 1;
+    Integer tmpPos = leftPos;
+    Integer numElements = rightEnd - leftPos + 1;
+    while (leftPos <= leftEnd && rightPos <= rightEnd)
     {
-        turnOrder.add(party.elementAt(i));
-    }
-    for (Integer i = 0; i < enemies.size(); i++)
-    {
-        turnOrder.add(enemies.elementAt(i));
-    }
-    for (Integer i = 0; i < turnOrder.size() - 1; i++)
-    { Integer tracker = i;
-        for (Integer j = i; j <= turnOrder.size()- 1; j++)
+        if(heroes.elementAt(leftPos).Speed <= heroes.elementAt(rightPos).Speed)
         {
-            if (turnOrder.elementAt(i).Speed < turnOrder.elementAt(tracker).Speed)
-            {
-                tracker = j;
-            }
+            Collections.swap(heroes, leftPos, rightPos);
+            //tmp.elementAt(tmpPos++) = heroes.  elementAt(leftPos++);
+
         }
-        Collections.swap(turnOrder, i, tracker);
-
-
+        /*
+        else
+        {
+            Collections.swap(heroes, );
+            tmpArray[ tmpPos++ ] = std::move(a[ rightPos++ ]);
+        }
 
     }
-    return turnOrder;
+    while(leftPos <= leftEnd)
+    {
+        tmpArray[ tmpPos++ ] = std::move( a[ leftPos++ ]);
+    }
+    while(rightPos <= rightEnd)
+    {
+        tmpArray[tmpPos++] = std::move(a[rightPos++]);
+
+    }
+    for(int i = 0; i < numElements; ++i, --rightEnd)
+    {
+        a[rightEnd] = std::move(tmpArray[rightEnd]);
+    }
+*/
+}
+
+
+    return heroes;
 }
 public boolean Combat(Vector<Heroes> heroes){
     Scanner response = new Scanner(System.in);
-Vector<Heroes> turnOrder = turnOrder();
+    Vector<Heroes> tmp = new Vector<>(20);
+Vector<Heroes> turnOrder = mergesort(heroes, tmp, 0,  heroes.size() - 1);
 Vector<Heroes> goodOrder = new Vector<>(20);
 Vector<Heroes> badOrder = new Vector<>(20);;
 for (Integer i = 0; i < turnOrder.size(); i++)
@@ -246,21 +261,29 @@ while(turnOrder.elementAt(0).HP != 0){
                 case "attack":
                 {
                     System.out.println("Who would you like to attack?");
+                    for (Integer j = 0; j < badOrder.size(); j++)
+                    {
+                        System.out.println(badOrder.elementAt(j).name);
+                    }
+                    answer = response.nextLine();
+                    for (Integer k = 0; k < badOrder.size(); k++)
+                    {
+                        if (badOrder.elementAt(k).name == answer)
+                        {
+                            turnOrder.elementAt(i).damage(turnOrder.elementAt(i).items.elementAt(0), badOrder.elementAt(k));
+                        }
+                    }
 
-                    turnOrder.elementAt(i).damage();
+
 
                 }
                 case "spells":
                 {
-                    turnOrder.elementAt(i).spells();
-                }
-                case "items":
-                {
-                    turnOrder.elementAt(i).item();
+                    turnOrder.elementAt(i).spells(turnOrder);
                 }
                 case "special":
                 {
-                    turnOrder.elementAt(i).Special();
+                    turnOrder.elementAt(i).Special(turnOrder.elementAt(i).items.elementAt(0), turnOrder.elementAt(i), goodOrder, badOrder);
                 }
                 case "defend":
                 {
@@ -277,15 +300,17 @@ while(turnOrder.elementAt(0).HP != 0){
             {
                 case 0:
                 {
-
+                    Integer target = rand.nextInt(goodOrder.size());
+                    turnOrder.elementAt(i).damage(turnOrder.elementAt(i).items.elementAt(0), goodOrder.elementAt(target));
                 }
                 case 1:
-                {
-
+                { Integer magic = rand.nextInt(turnOrder.elementAt(i).spells.size());
+                  Integer target = rand.nextInt(goodOrder.size());
+                    turnOrder.elementAt(i).damage(turnOrder.elementAt(i).spells.elementAt(magic), goodOrder.elementAt(target));
                 }
                 case 2:
                 {
-                    turnOrder.elementAt(i).Special();
+                    turnOrder.elementAt(i).Special(turnOrder.elementAt(i).items.elementAt(0), turnOrder.elementAt(i), goodOrder, badOrder);
                 }
             }
         }
