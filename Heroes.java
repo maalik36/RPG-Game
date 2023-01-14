@@ -16,7 +16,7 @@ public class Heroes {
     Integer MP;
     String Specials;
     Vector<item> items;
-    Vector<item> spells;
+    Vector<spells> spells;
     Boolean agro = false;
 
     public Integer getAttack() {
@@ -67,7 +67,7 @@ public class Heroes {
         return type;
     }
 
-    public Vector<item> getSpells() {
+    public Vector<spells> getSpells() {
         return spells;
     }
 
@@ -103,7 +103,7 @@ public class Heroes {
         Magic = magic;
     }
 
-    public void setSpells(Vector<item> spells) {
+    public void setSpells(Vector<spells> spells) {
         this.spells = spells;
     }
 
@@ -175,6 +175,7 @@ public class Heroes {
                         if (turnOrder.elementAt(k).name == answer)
                         {
                             this.damage(this.spells.elementAt(i), turnOrder.elementAt(k));
+                            this.MP = this.MP - this.spells.elementAt(i).MPCost;
                         }
                     }
                 }
@@ -186,7 +187,15 @@ public class Heroes {
         Integer value = other.getDefense() - amount;
         other.setHP(other.getHP() + value);
     }
-
+    public boolean hit(Heroes other){
+        Random rand = new Random();
+        Integer hit = rand.nextInt(other.Evasion);
+        if (hit == other.Evasion)
+        {
+            return true;
+        }
+        return false;
+    }
 
 };
 class Hero extends Heroes{
@@ -377,8 +386,8 @@ class Sweeper extends Heroes{
 
     }
 }
-class Shield extends Heroes{
-    public void Shield(){
+class Tank extends Heroes{
+    public void Tank(){
         Scanner name = new Scanner(System.in);
         System.out.println("Enter name.");
         this.name = name.nextLine();

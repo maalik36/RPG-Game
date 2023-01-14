@@ -5,6 +5,7 @@ public class item {
     Integer healing;
     Integer magic;
 
+
     public void item(){
 
     }
@@ -39,6 +40,7 @@ public class item {
     public void setOffense(Integer offense) {
         this.offense = offense;
     }
+
 
 }
 class sword extends  item{
@@ -173,6 +175,14 @@ class branch extends  item{
 }
 class spells extends  item{
     Integer MPCost;
+
+    public Integer getMPCost() {
+        return MPCost;
+    }
+
+    public void setMPCost(Integer MPCost) {
+        this.MPCost = MPCost;
+    }
 }
 class fire extends  spells{
     fire()

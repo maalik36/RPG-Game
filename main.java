@@ -58,8 +58,8 @@ public void Game(){
     answer = name.nextLine();
     if (answer == "Y")
     {
-        Shield shield = new Shield();
-        heroes.add(shield);
+        Tank tank = new Tank();
+        heroes.add(tank);
     }
     System.out.println("Oh look! A hawk and an eagle appeared!");
     heroes.add(eagle);
@@ -255,6 +255,7 @@ while(turnOrder.elementAt(0).HP != 0){
         if (turnOrder.elementAt(i).type == "good")
         {
             System.out.println("What would " + turnOrder.elementAt(i).name + " like to do?");
+            System.out.println("attack, spells, special, defend");
             String answer = response.nextLine();
             switch (answer)
             {
@@ -269,8 +270,12 @@ while(turnOrder.elementAt(0).HP != 0){
                     for (Integer k = 0; k < badOrder.size(); k++)
                     {
                         if (badOrder.elementAt(k).name == answer)
-                        {
-                            turnOrder.elementAt(i).damage(turnOrder.elementAt(i).items.elementAt(0), badOrder.elementAt(k));
+                        {   boolean hit = turnOrder.elementAt(i).hit(badOrder.elementAt(k));
+                            if (hit == true)
+                            {
+                                turnOrder.elementAt(i).damage(turnOrder.elementAt(i).items.elementAt(0), badOrder.elementAt(k));
+                            }
+
                         }
                     }
 
@@ -301,7 +306,12 @@ while(turnOrder.elementAt(0).HP != 0){
                 case 0:
                 {
                     Integer target = rand.nextInt(goodOrder.size());
-                    turnOrder.elementAt(i).damage(turnOrder.elementAt(i).items.elementAt(0), goodOrder.elementAt(target));
+                    boolean hit = turnOrder.elementAt(i).hit(goodOrder.elementAt(target));
+                    if (hit == true)
+                    {
+                        turnOrder.elementAt(i).damage(turnOrder.elementAt(i).items.elementAt(0), goodOrder.elementAt(target));
+                    }
+
                 }
                 case 1:
                 { Integer magic = rand.nextInt(turnOrder.elementAt(i).spells.size());
